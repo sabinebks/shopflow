@@ -55,3 +55,17 @@ yarn-error.log*
 ehthumbs.db
 Thumbs.db
 **/.DS_Store
+
+# Local credentials and environment
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+# Generated files and local tooling
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.tsbuildinfo

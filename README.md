@@ -1,158 +1,66 @@
-<p align="center">
-  <a href="https://www.medusajs.com">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/59018053/229103275-b5e482bb-4601-46e6-8142-244f531cebdb.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
-    <img alt="Medusa logo" src="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
-    </picture>
-  </a>
-</p>
-<h1 align="center">
-  Medusa DTC Starter
-</h1>
+# Medusa
 
-<h4 align="center">
-  <a href="https://docs.medusajs.com">Documentation</a> |
-  <a href="https://www.medusajs.com">Website</a>
-</h4>
+Base de boutique en ligne associant un backend **Medusa** et une vitrine **Next.js** : catalogue, panier, commande et espace client.
 
-<p align="center">
-  Building blocks for digital commerce
-</p>
-<p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/develop/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Medusa is released under the MIT license." />
-  </a>
-  <a href="https://circleci.com/gh/medusajs/medusa">
-    <img src="https://circleci.com/gh/medusajs/medusa.svg?style=shield" alt="Current CircleCI build status." />
-  </a>
-  <a href="https://github.com/medusajs/medusa/blob/develop/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
-  </a>
-    <a href="https://www.producthunt.com/posts/medusa"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-%23DA552E" alt="Product Hunt"></a>
-  <a href="https://discord.gg/xpCwq3Kfn8">
-    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
-  </a>
-</p>
+> **Origine :** fork de [Medusa DTC Starter](https://github.com/medusajs/dtc-starter), sous licence MIT. Ce dépôt est une base open source en cours d’appropriation par **Boukais Sabine**. Les fonctionnalités commerciales proviennent des auteurs de Medusa ; aucune personnalisation fonctionnelle de Sabine n’a été identifiée dans les sources fournies.
 
-# Medusa DTC Starter
+## Fonctionnalités présentes
 
-A production-ready monorepo starter for direct-to-consumer ecommerce stores powered by Medusa and Next.js. Includes a fully featured storefront with product browsing, cart, checkout, customer accounts, and order management.
+- Catalogue de produits, variantes, collections et catégories.
+- Panier, codes promotionnels et parcours de commande avec livraison et paiement.
+- Comptes clients, adresses, historique des commandes et transfert de commande.
+- Gestion de plusieurs régions et interface d’administration Medusa.
 
-## Features
+## Technologies
 
-- All of [Medusa's commerce features](https://docs.medusajs.com/resources/commerce-modules)
-- Multi-region support with automatic country detection
-- Product catalog with variant selection
-- Cart with promotion codes
-- Multi-step checkout with shipping and payment
-- Customer accounts with order history and address management
-- Order transfer between accounts
+TypeScript · Medusa 2 · Next.js 15 · React · Tailwind CSS · PostgreSQL · pnpm · Turborepo.
 
-## Getting Started
+## Installation et lancement
 
-### Deploy with Medusa Cloud
-
-The fastest way to get started is deploying with [Medusa Cloud](https://cloud.medusajs.com):
-
-1. [Create a Medusa Cloud account](https://cloud.medusajs.com)
-2. Deploy this starter directly from your dashboard
-
-### Local Installation
-
-> **Prerequisites:
->
-> - [Node.js](https://nodejs.org/) v20+
-> - [PostgreSQL](https://www.postgresql.org/) v15+
-> - [pnpm](https://pnpm.io/) v10+
-
-1. Clone the repository and install dependencies:
+Prérequis : **Node.js 22.22.0 ou supérieur**, **pnpm 10.11.1** (version du `packageManager`) et **PostgreSQL 15+**. La version Node indiquée ici suit les `package.json` fournis.
 
 ```bash
-git clone https://github.com/medusajs/dtc-starter.git
-cd dtc-starter
+git clone https://github.com/sabinebks/medusa.git
+cd medusa
 pnpm install
 ```
 
-2. Set up environment variables for the backend:
+1. Copier `apps/backend/.env.template` vers `apps/backend/.env`. Renseigner `DATABASE_URL`, les origines CORS et des valeurs personnelles pour `JWT_SECRET` et `COOKIE_SECRET`. Les valeurs du template servent d’exemples de développement.
+2. Créer la base PostgreSQL désignée par `DATABASE_URL`, puis appliquer les migrations depuis `apps/backend` :
 
-```bash
-cp apps/backend/.env.template apps/backend/.env
-```
+   ```bash
+   pnpm exec medusa db:migrate
+   pnpm exec medusa user --help
+   ```
 
-3. Set the database URL in `apps/backend.env`:
+   Créer ensuite son compte administrateur avec la commande `medusa user` et ses propres identifiants, suivant cette aide.
+3. Depuis la racine, lancer le backend :
 
-```bash
-# Replace with actual database URL, make sure the database exists.
-DATABASE_URL=postgres://postgres:@localhost:5432/medusa-dtc-starter
-```
+   ```bash
+   pnpm run backend:dev
+   ```
 
-4. Run migrations:
+4. Ouvrir l’administration sur `http://localhost:9000/app` et créer ou récupérer une clé API publiable. Copier `apps/storefront/.env.template` vers `apps/storefront/.env.local`, puis renseigner `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` et l’URL du backend.
+5. Dans un second terminal, depuis la racine :
 
-```bash
-cd apps/backend
-pnpm medusa db:migrate
-```
+   ```bash
+   pnpm run storefront:dev
+   ```
 
-5. Add admin user:
+La vitrine est disponible sur `http://localhost:8000`. Une fois les deux applications configurées, `pnpm run dev` les lance ensemble. Le catalogue dépend des données de la base ; cette publication ne crée pas de boutique hébergée.
 
-```bash
-cd apps/backend
-pnpm medusa user -e admin@test.com -p supersecret
-```
+## Repères et documentation
 
-6. Start Medusa backend:
+| Chemin | Rôle |
+| --- | --- |
+| `apps/backend` | Backend et administration Medusa |
+| `apps/storefront` | Vitrine Next.js |
+| `apps/backend/medusa-config.ts` | Connexion à la base et configuration HTTP |
 
-```bash
-cd apps/backend
-pnpm dev
-```
+La [documentation d’origine](docs/amont/README.md) est conservée avec ses ressources et options de configuration. Pour démarrer cette copie, suivre les versions et chemins corrigés ci-dessus : le fichier de configuration est bien `apps/backend/.env`.
 
-7. Open the admin dashboard at `localhost:9000/app` and log in. Retrieve your publishable API key at Settings > Publishable API key.
+## Origine et vérification
 
-8. Set up environment variables for the storefront:
-
-```bash
-cp apps/storefront/.env.template apps/storefront/.env.local
-```
-
-9. Update `apps/storefront/.env.local` with your Medusa publishable API key:
-
-```bash
-NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_6c3...
-```
-
-10.  Start storefront:
-
-```bash
-cd apps/storefront
-pnpm dev
-```
-
-The storefront runs on `http://localhost:8000`.
-
-You can slo run the following command from the root to start both backend and storefront:
-
-```bash
-pnpm dev
-```
-
-## Configuration
-
-The storefront is configured via environment variables in `apps/storefront/.env.local`:
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` | Publishable API key from your Medusa backend | — |
-| `NEXT_PUBLIC_MEDUSA_BACKEND_URL` | URL of your Medusa backend | `http://localhost:9000` |
-| `NEXT_PUBLIC_DEFAULT_REGION` | Default region country code | `dk` |
-| `NEXT_PUBLIC_BASE_URL` | Base URL of the storefront | `https://localhost:8000` |
-| `NEXT_PUBLIC_STRIPE_KEY` | Stripe publishable key (optional) | — |
-
-## Resources
-
-- [Medusa Documentation](https://docs.medusajs.com)
-- [Medusa Cloud](https://cloud.medusajs.com)
+- Auteurs du socle : Medusa et ses contributeurs ; [licence MIT](LICENSE) conservée.
+- Préparation de ce portfolio : présentation en français, documentation du lancement et attribution de la base d’origine.
+- Sources et scripts examinés. L’application, les paiements et les tests nécessitant PostgreSQL n’ont pas été exécutés lors de cette publication.
