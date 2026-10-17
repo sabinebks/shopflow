@@ -1,8 +1,6 @@
-# Medusa
+# Shopflow
 
 Base de boutique en ligne associant un backend **Medusa** et une vitrine **Next.js** : catalogue, panier, commande et espace client.
-
-> **Origine :** fork de [Medusa DTC Starter](https://github.com/medusajs/dtc-starter), sous licence MIT. Ce dépôt est une base open source en cours d’appropriation par **Boukais Sabine**. Les fonctionnalités commerciales proviennent des auteurs de Medusa ; aucune personnalisation fonctionnelle de Sabine n’a été identifiée dans les sources fournies.
 
 ## Fonctionnalités présentes
 
@@ -20,8 +18,8 @@ TypeScript · Medusa 2 · Next.js 15 · React · Tailwind CSS · PostgreSQL · p
 Prérequis : **Node.js 22.22.0 ou supérieur**, **pnpm 10.11.1** (version du `packageManager`) et **PostgreSQL 15+**. La version Node indiquée ici suit les `package.json` fournis.
 
 ```bash
-git clone https://github.com/sabinebks/medusa.git
-cd medusa
+git clone https://github.com/sabinebks/shopflow.git
+cd shopflow
 pnpm install
 ```
 
@@ -61,6 +59,6 @@ La [documentation d’origine](docs/amont/README.md) est conservée avec ses res
 
 ## Origine et vérification
 
-- Auteurs du socle : Medusa et ses contributeurs ; [licence MIT](LICENSE) conservée.
+- Shopflow s’appuie sur [Medusa DTC Starter](https://github.com/medusajs/dtc-starter), une base open source en cours d’appropriation. Les fonctionnalités du socle proviennent de Medusa et de ses contributeurs ; [licence MIT](LICENSE) conservée.
 - Préparation de ce portfolio : présentation en français, documentation du lancement et attribution de la base d’origine.
 - Sources et scripts examinés. L’application, les paiements et les tests nécessitant PostgreSQL n’ont pas été exécutés lors de cette publication.
